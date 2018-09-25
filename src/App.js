@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Switch, Route } from "react-router-dom";
+
 import './App.css';
+import HomePage from './components/HomePage';
+import NotFound from './components/NotFound';
+import Navigation from './components/Navigation';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+      <main>
+        <header>
+          <h1>Ironphones</h1>
+          <Navigation />
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route component={NotFound} />
+        </Switch>
+
+        <footer>
+          <p>Made with 📱 at Ironhack</p>
+        </footer>
+      </main>
     );
   }
 }
