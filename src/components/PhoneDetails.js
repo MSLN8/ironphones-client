@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import api from "../api.js";
 
@@ -53,6 +54,10 @@ class PhoneDetails extends React.Component {
 
         <p>Product #{_id}</p>
         <p>Added on {createdAt}</p>
+
+        <Link to={`/phone-details/${_id}/edit`}>
+          Edit This Phone
+        </Link>
       </section>
     );
   }
