@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
@@ -9,6 +10,8 @@ function NotFound() {
 
       <p>Here's a gorilla for you to talk to though:</p>
       <h1>🦍</h1>
+
+      <Link to="/phone-list">Buy Your Next Phone</Link>
     </section>
   );
 }

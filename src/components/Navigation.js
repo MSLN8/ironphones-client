@@ -5,6 +5,7 @@ function Navigation() {
   return (
     <nav>
       <NavLink exact to="/">Home</NavLink>
+      <NavLink to="/phone-list">Our Phones</NavLink>
     </nav>
   );
 }
