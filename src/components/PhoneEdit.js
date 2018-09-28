@@ -7,6 +7,7 @@ class PhoneEdit extends React.Component {
   constructor(props) {
     super(props);
 
+    this.originalImage = "";
     this.state = {
       model: "",
       brand: "",
@@ -26,6 +27,7 @@ class PhoneEdit extends React.Component {
         console.log("Phone EDIT ☎", response.data);
         // when we get the data back setState() to update
         this.setState(response.data);
+        this.originalImage = response.data.image;
       })
       .catch(err => {
         console.log(err);
@@ -44,8 +46,30 @@ class PhoneEdit extends React.Component {
   }
 
   updateImage(event) {
-    const { value } = event.target;
-    this.setState({ image: value });
+    const { files } = event.target;
+    console.log("File SELECTED", files[0]);
+
+    if (!files[0]) {
+      // reset back to the old image if you unselect your uploaded file
+      this.setState({ image: this.originalImage });
+      return;
+    }
+
+    // we need the "FormData" class to upload files to the API
+    const uploadData = new FormData();
+    // this name "imageFile" is connected with your backend route
+    uploadData.append("imageFile", files[0]);
+
+    api.post("/upload-image", uploadData)
+      .then(response => {
+        console.log("File UPLOADED", response.data);
+        const { imageUrl } = response.data;
+        this.setState({ image: imageUrl });
+      })
+      .catch(err => {
+        console.log(err);
+        alert("Sorry! There was an error. 💩");
+      });
   }
 
   updateSpecs(event, index) {
@@ -110,9 +134,11 @@ class PhoneEdit extends React.Component {
           </label>
 
           <label>
-            Image URL: <input type="url" value={image}
-                onChange={event => this.updateImage(event)}/>
+            Image:
+            <input type="file" onChange={event => this.updateImage(event)} />
           </label>
+
+          <img src={image} />
 
           <h3>Specs</h3>
           <p>5 characters or more</p>
